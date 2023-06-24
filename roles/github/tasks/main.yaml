@@ -1,0 +1,35 @@
+# clone a laravel repo to a directory and cpoy the env file to the smae directory for the repo
+
+
+- name: check if git repo exist
+  stat:
+    path: /var/www/html/mbanugo
+  register: env
+
+- name: Clone a repo with separate git directory
+  git:
+    repo: https://github.com/f1amy/laravel-realworld-example-app.git
+    clone: yes
+    dest: /var/www/html/mbanugo
+  register: env
+  when: not env.stat.exists
+
+- name: copy env file application to dest
+  copy:
+    src: .env
+    dest: /var/www/html/mbanugo
+#  when: env.change
+
+#- name: check if git repo exist
+#  stat:
+#    path: /var/www/html/mbanugo
+#  register: env
+#  when: not env.stat.exists
+
+- name: change permission for the /var/www/html/mbanugo
+  file:
+    dest: /var/www/html/mbanugo
+    owner: franklyn
+    group: www-data
+    mode: 0775
+    recurse: yes

@@ -1,0 +1,14 @@
+# some applications require postgres before it can run, that's why we are installing postgreSql
+
+- name: run script setup
+  tags:
+    - postgres
+  script: postgres.sh
+
+
+- name: check that postgres is installed
+  tags:
+    - postgres
+  command: sudo -u postgres psql -c "SELECT version();"
+
+

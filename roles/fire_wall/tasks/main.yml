@@ -1,0 +1,27 @@
+# Installing ufw and allowing connections port 22,80,Openssh and apache
+
+- name: Install ufw
+  apt:
+    name: ufw
+    state: present
+
+- name: Allow connection on tcp port 22
+  ufw:
+    rule: allow
+    port: '22'
+    proto: tcp
+
+- name: Allow openssh
+  ufw:
+    rule: allow
+    name: OpenSSH
+
+- name: Allow connection for Apache
+  ufw:
+    rule: allow
+    name: apache
+
+- name: enable UFW
+  ufw:
+    state: enabled
+

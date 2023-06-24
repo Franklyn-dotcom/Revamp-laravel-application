@@ -1,0 +1,125 @@
+---
+
+- hosts: default
+  become: true
+  remote_user: franklyn
+  pre_tasks:
+
+  - name: update repositiory index
+    apt:
+      update_cache: true
+
+#- hosts: default
+#  become: true
+#  tasks:
+
+#  - name: Install apache2 package
+#    apt:
+#      name: apache2
+#      state: present
+#
+#  - name: add php support for apache
+#    apt:
+#      name: libapache2-mod-php
+#      state: absent
+
+#  - name: start apache for ubuntu
+#    tags: apache,ubuntu
+#    service:
+#      name: apache2
+#      state: started
+#      enabled: yes
+#    when: ansible_distribution == "ubuntu"
+
+#- hosts: default
+#  become: true
+#  roles:
+#    - web_servers
+
+#- hosts: default
+#  become: true
+#  tasks:
+
+#  - name: create a user named simeone
+#    tags: always
+#    user:
+#      name: simeone
+#      groups: root
+
+#- hosts: default
+#  become: true
+#  roles:
+#    - base
+
+#- hosts: default
+#  become: true
+#  tasks:
+
+#  - name: add sudoers file for simeone
+#    tags: always
+#    copy:
+#      src: sudoer_simeone
+#      dest: /etc/sudoers.d/simeone
+#      owner: root
+#      group: root
+#      mode: 0440
+
+- hosts: default
+  become: true
+  remote_user: franklyn
+  roles:
+    - base
+
+- hosts: default
+  become: true
+  remote_user: franklyn
+  roles:
+    - packages
+
+- hosts: default
+  become: true
+  remote_user: franklyn
+  roles:
+    - php_modules
+
+- hosts: default
+  become: true
+  remote_user: franklyn
+  roles:
+    - fire_wall
+
+- hosts: default
+  become: true
+  remote_user: franklyn
+  roles:
+    - composer
+
+- hosts: default
+  become: true
+  remote_user: franklyn
+  roles:
+    - db
+
+- hosts: default
+  become: true
+  remote_user: franklyn
+  roles:
+    - github
+
+- hosts: default
+  become: false
+  remote_user: franklyn
+  roles:
+    - artisan
+
+- hosts: default
+  become: true
+  remote_user: franklyn
+  roles:
+    - apache_config
+
+- hosts: default
+  become: true
+  remote_user: franklyn
+  roles:
+    - postgres

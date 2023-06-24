@@ -1,0 +1,24 @@
+#copying apache config file to the specified directory and enable the files
+- name: copy apache config file to the /etc/apache2/sites-available/
+  copy:
+    src: franklyn.conf
+    dest: /etc/apache2/sites-available/
+
+- name: enable re-write
+  command:
+   argv:
+    - a2enmod
+    - rewrite
+
+- name: enable config file
+  command:
+   argv:
+    - a2ensite
+    - franklyn.conf
+
+
+- name: restart apache2
+  service:
+    name: apache2
+    state: restarted
+

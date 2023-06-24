@@ -1,0 +1,20 @@
+- name: create a user named simeone
+  tags: always
+  user:
+    name: franklyn
+    groups: root
+
+- name: add ssh key for simeone
+  tags: always
+  authorized_key:
+    user: franklyn
+    key: "{{ ssh_key }}"
+
+- name: add sudoers file for simeone
+  tags: always
+  copy:
+    src: sudoer_simeone
+    dest: /etc/sudoers.d/franklyn
+    owner: root
+    group: root
+    mode: 0440

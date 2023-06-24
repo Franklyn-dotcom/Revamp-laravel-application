@@ -1,0 +1,37 @@
+# install dependencies using composer and generate key for application using php artisan
+
+- name: install dependencies using composer
+  command:
+    chdir: /var/www/html/mbanugo
+    argv:
+      - composer
+      - install
+  become: false
+  when: env.changed
+
+- name: generate key for application using php artisan
+  command:
+    chdir: /var/www/html/mbanugo
+    argv:
+      - php
+      - artisan
+      - key:generate
+  when: env.changed
+
+- name: migrate database
+  command:
+    chdir: /var/www/html/mbanugo
+    argv:
+      - php
+      - artisan
+      - migrate
+      - --seed
+  when: env.changed
+
+- name: clear cache for the php artisan
+  command:
+    chdir: /var/www/html/mbanugo
+    argv:
+      - php
+      - artisan
+      - cache:clear

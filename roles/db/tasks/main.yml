@@ -1,0 +1,36 @@
+# Install mysql, it's dependencies amd creating a mysql user
+
+- name: Installing Mysql  and dependencies
+  apt:
+    pkg: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - mysql-server
+    - mysql-client
+    - python3-mysqldb
+    - libmysqlclient-dev
+  become: yes
+
+
+- name: start and enable mysql service
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+
+- name: creating mysql user (franklyn)
+  mysql_user:
+    name: "{{ mysql_name }}"
+    password: "{{ mysql_pass }}"
+    priv: "{{ priv }}"
+    host: '%'
+    state: present
+
+- name: creating db
+  mysql_db:
+    name: "{{ mysql_db }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_pass }}"
+    state: present
