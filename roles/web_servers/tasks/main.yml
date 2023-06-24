@@ -1,8 +1,0 @@
-- name: copy default html file to dest path
-  copy:
-    src: default.html
-    dest: /var/www/html/index.html
-    owner: root
-    group: root
-    mode: 0644
-  
